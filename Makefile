@@ -11,7 +11,7 @@ CFLAGS = -O3  -Wall -ansi -pedantic -std=c++11 -I $(INCLUDEDIR)
 
 LDFLAGS =
 
-BIN = ${BINDIR}/lab03
+BIN = ${BINDIR}/lab04
 
 APP = ${APPDIR}/main.cpp
 

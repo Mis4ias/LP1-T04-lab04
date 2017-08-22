@@ -1,31 +1,42 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
+#include <vector>
 
 template <typename T>
 class Matrix {
 	private:
 		int rows, cols;			//number of rows and columns
-		T **element;			//element
-		void malloc_matrix();        //allocator
+		std::vector<std::vector<T>> &matrix;
 	public:
-		Matrix(int, int);		//param Constructor
-		Matrix();				//std Constructor
-		~Matrix();				//std Destructor	
-		};
+		Matrix(int, int, bool);		//param Constructor
+		~Matrix();				//std Destructor
+};
 
-/** Private Methods **/
+Matrix::Matrix(int, int, bool){
+	
+
+}
+
+
+
+
+
+
+
+/*
+ Private Methods /
 
 template <typename T>
 void Matrix::malloc_matrix(){
 	
-	element = new T*[rows];
+	matrix = new T*[rows];
 	for(int i=0;i<rows;i++){
 		alloc = new T[cols];
 	}
 }
 
-/** Public Methods **/
+ Public Methods 
 
 Matrix::Matrix(int rws, int cls): rows(rws), cols(cls){
 	
@@ -49,5 +60,5 @@ Matrix::~Matrix(){
 			delete [] element[i];
 	}
 	delete [] element;
-}
+}*/
 #endif // __MATRIX_H__

@@ -1,6 +1,6 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
-
+#include <iostream>
 #include <vector>
 
 template <typename T>
@@ -10,8 +10,8 @@ class Matrix {
 		std::vector<std::vector<T>> vect;
 	public:
 		Matrix(int, int, bool);		//param Constructor
-		
-		~Matrix();				//std Destructor
+		void print();	
+		//~Matrix();				//std Destructor
 		//void setRows(int yy);
 		//void setCols(int xx);
 		//int getRows();
@@ -19,12 +19,22 @@ class Matrix {
 };
 template <typename T>
 Matrix<T>::Matrix(int cols, int rows, bool flag){
-	if(flag == true){
-		vect(cols, std::vector<T>(rows));
+	for(int i=0;i<cols;i++){
+		for(int j=0;j<rows;j++){
+			vect.push_back(0);
+		}
 	}
 
 }
 
+template <typename T>
+void Matrix<T>::print(){
+	for(unsigned i=0;i<vect.size();i++){	
+		for(unsigned j=0;i<vect[i].size();j++){
+			std::cout<<vect[i][j]<<std::endl;
+		}
+	}
+}
 /*
 template <typename T>
 Matrix<T>::Matrix(int cols, int rows, bool flag){

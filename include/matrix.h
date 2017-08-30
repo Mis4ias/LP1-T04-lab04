@@ -15,6 +15,8 @@ class Matrix {
 		void print();	
 		~Matrix();				//std Destructor
 };
+template<typename T>
+std::ostream& operator<< (std::ostream &ost, const Matrix<T> &matrix);
 template <typename T>
 Matrix<T>::Matrix(int cols_pub, int rows_pub, bool flag_pub){
 	this->rows = rows_pub;
@@ -32,7 +34,7 @@ Matrix<T>::Matrix(int cols_pub, int rows_pub, bool flag_pub){
 	}
 
 }
-
+/*
 template <typename T>
 void Matrix<T>::print(){
 	for(int i=0;i<this->cols;i++){	
@@ -41,7 +43,7 @@ void Matrix<T>::print(){
 		}
 	std::cout<<std::endl;
 	}
-}
+}*/
 template <typename T>
 Matrix<T>::~Matrix(){
 

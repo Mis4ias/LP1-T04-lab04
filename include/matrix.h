@@ -9,29 +9,70 @@ class Matrix {
 	private:
 		int rows, cols;			//number of rows and columns
 		bool flag;
-		std::vector<std::vector<T>> matrix;
+		std::vector<std::vector<T>> matrix_at;
 	public:
 		Matrix(int, int, bool);	//param Constructor
+		Matrix();
 		~Matrix();				//std Destructor
+		Matrix(const Matrix& to_copy);
 		T getElement(int, int)const;
-		void setElement(int, int);
 		int getRows()const;		//Use const
 		int getCols()const;
 		
-		const std::vector<std::vector<T>>& operator[][] (int, int) const;	
+		
+		Matrix& operator = (const Matrix& operator_right);
+		
+		const Matrix operator + (const Matrix& operator_right);
 		template <typename R> // Don't know about use the same T as parameter to the operator.
 		friend std::ostream& operator<< (std::ostream &ost, const Matrix<R> &matrix); //	
-		template <typename R>
-		friend std::istream& operator<< (std::istream &ist, Matrix<R> &matrix); //	
-
+		//template <typename R>
+		//friend std::istream& operator<< (std::istream &ist, Matrix<R> &matrix); //	
 };
+
+/**
+ * @biref Constructors and Destructors 
+ */
+
+template <typename T>
+Matrix<T>::Matrix(){ }
+
+template <typename T>
+Matrix<T>::~Matrix(){ }
+
+/** @brief Construtor Parametrizado */
+template <typename T>
+Matrix<T>::Matrix(int cols_pub, int rows_pub, bool flag_pub){
+	this->rows = rows_pub;
+	this->cols = cols_pub;
+	this->flag = flag_pub;
+
+	if(flag_pub == true){
+		for(int i=0;i<cols_pub;i++){
+			std::vector<int> vect;
+			for(int j=0;j<rows_pub;j++){
+				vect.push_back(j);
+			}
+		matrix_at.push_back(vect);
+		}
+	}
+
+}
+
+/** @brief Construtor Copia */
+template <typename T>
+Matrix<T>::Matrix(const Matrix& to_copy){
+	matrix_at = to_copy.matrix_at;
+    rows = to_copy.rows;
+	cols = to_copy.cols;
+}
+
+
 
 /**
  * @brief Getters and Setters for Matrix Class
  * getRows return the number of rows
  * getCols return the number of columns
  * getElement return a Member element
- * setElement push a <T> type for a relative index on matrix
  * */
 
 template <typename T>
@@ -46,15 +87,37 @@ int Matrix<T>::getCols() const{
 
 template <typename T>
 T Matrix<T>::getElement(int rows, int cols) const{
-	return matrix[rows][cols];
+	return matrix_at[rows][cols];
 
 }
 
+
+/**
+ * @brief Operators Overloads
+ **/
+
+/** @brief Operador de = */
 template <typename T>
-void Matrix<T>::setElement(int pos_rows, int pos_cols){
-	matrix[pos_rows][pos_cols];
+Matrix<T>& Matrix<T>::operator = (const Matrix& operator_right){
+	this->matrix_at = operator_right.matrix_at;
+	this->rows = operator_right.rows;
+	this->cols = operator_right.cols;
+	return *this;
 }
 
+/** @brief Operador de + */
+template <typename T>
+const Matrix<T> Matrix<T>::operator + (const Matrix& operator_right){
+	Matrix<T> result = operator_right;
+	for(int i=0;i<this->cols;i++){
+		for(int j=0;j<this->rows;j++){
+			result.matrix_at[i][j] = this->matrix_at[i][j] + operator_right.matrix_at[i][j];
+		}
+	}
+return result;
+}
+
+/** @brief Operador de saida de fluxo */
 template <typename T>
 std::ostream& operator<< (std::ostream &ost, const Matrix<T> &matrix){
 	for(int i=0;i<matrix.getCols();i++){	
@@ -65,43 +128,19 @@ std::ostream& operator<< (std::ostream &ost, const Matrix<T> &matrix){
 	}
 return ost;
 }
-template <typename T>
-const std::vector<std::vector<T>>& operator[][] (int i, int j) const{
-	return matrix[i][j];
-}
 
+/** @brief Operadore de entrada de fluxo ainda em construcao */
 template <typename T>
 std::istream& operator>> (std::istream &ist, Matrix<T> &matrix){
 	for(int i=0;i<matrix.getCols();i++){
 		for(int j=0;j<matrix.getRows();j++){
-			ist >> matrix[i][j];
+			//ist >> matrix.rows;
 		}
 	}
 return ist;
 }
-template <typename T>
-Matrix<T>::Matrix(int cols_pub, int rows_pub, bool flag_pub){
-	this->rows = rows_pub;
-	this->cols = cols_pub;
-	this->flag = flag_pub;
-
-	if(flag_pub == true){
-		for(int i=0;i<cols_pub;i++){
-			std::vector<int> vect;
-			for(int j=0;j<rows_pub;j++){
-				vect.push_back(j);
-			}
-		matrix.push_back(vect);
-		}
-	}
-
-}
-
-template <typename T>
-Matrix<T>::~Matrix(){
 
 
-}
 
 
 

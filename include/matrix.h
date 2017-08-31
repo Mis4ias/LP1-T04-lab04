@@ -11,7 +11,7 @@ class Matrix {
 		bool flag;
 		std::vector<std::vector<T>> matrix_at;
 	public:
-		Matrix(int, int, bool);	//param Constructor
+		Matrix(int rows_pub, int cols_pub, bool flag_pub) : rows(rows_pub), cols(cols_pub), flag(flag_pub);	//param Constructor
 		Matrix();
 		~Matrix();				//std Destructor
 		Matrix(const Matrix& to_copy);

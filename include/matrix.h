@@ -46,7 +46,10 @@ Matrix<T>::Matrix(int cols_pub, int rows_pub, bool flag_pub){
 	this->rows = rows_pub; //rever se precisa isso apos nova confi do construtor.
 	this->cols = cols_pub;
 	this->flag = flag_pub;
-	
+	/**
+	Usar resize para flag true
+	Usar reserve para flag false
+	*/
 	if(flag_pub == true){
 		for(int i=0;i<cols_pub;i++){
 			std::vector<int> vect;

@@ -7,8 +7,9 @@ int main(){
 	odd = matrix;
 	Matrix<int> copy(odd);
 	Matrix<int> soma;
+	Matrix<int> sub;
 	soma = matrix + odd;	
-	
+	sub = matrix - odd;
 	std::cout<<"Matrix Original"<<std::endl;
 	std::cout<<matrix;
 	std::cout<<std::endl;
@@ -24,6 +25,9 @@ int main(){
 	std::cout<<"Matrix somada"<<std::endl;
 	std::cout<<soma;
 	std::cout<<std::endl;
-	
+		
+	std::cout<<"Matrix sub"<<std::endl;
+	std::cout<<sub;
+	std::cout<<std::endl;
 	return 0;
 }

@@ -23,6 +23,7 @@ class Matrix {
 		Matrix& operator = (const Matrix& operator_right);
 		
 		const Matrix operator + (const Matrix& operator_right);
+		const Matrix operator - (const Matrix& operator_right);
 		template <typename R> // Don't know about use the same T as parameter to the operator.
 		friend std::ostream& operator<< (std::ostream &ost, const Matrix<R> &matrix); //	
 		//template <typename R>
@@ -112,6 +113,18 @@ const Matrix<T> Matrix<T>::operator + (const Matrix& operator_right){
 	for(int i=0;i<this->cols;i++){
 		for(int j=0;j<this->rows;j++){
 			result.matrix_at[i][j] = this->matrix_at[i][j] + operator_right.matrix_at[i][j];
+		}
+	}
+return result;
+}
+
+/** @brief Operador de - */
+template <typename T>
+const Matrix<T> Matrix<T>::operator - (const Matrix& operator_right){
+	Matrix<T> result = operator_right;
+	for(int i=0;i<this->cols;i++){
+		for(int j=0;j<this->rows;j++){
+			result.matrix_at[i][j] = this->matrix_at[i][j] - operator_right.matrix_at[i][j];
 		}
 	}
 return result;

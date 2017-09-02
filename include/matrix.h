@@ -23,10 +23,35 @@ class Matrix {
 				else _data[ik].reserve(end_cols);
 			}
 	}
-	friend std::ostream& operator <<(std::ostream& out, Matrix<T>& l_object){
+	Matrix(const Matrix& right_object): _data(right_object._data) {	}
+	
+	void operator= (const Matrix& object){
+		_data = object._data;
+	}	
+	
+	bool operator== (const Matrix& right_object){
 		typename std::vector<std::vector<T>>::iterator rows;
 		typename std::vector<T>::iterator cols;
-			for(rows = l_object._data.begin(); rows != l_object._data.end(); rows++){
+		typename std::vector<std::vector<T>>::iterator rr;
+		typename std::vector<T>::iterator rc;
+		if(_data.size() == right_object._data.size()){
+			for(rows = _data.begin(); rows != _data.end(); rows++){
+				//rr = right_object._data.begin();
+				for(cols = rows->begin(); cols != rows->end(); cols ++){
+				//	rc = rr->begin();
+					if (*cols != *right_object._data.begin()+sizeof(cols)) return false; 
+				//	rc++;
+				}
+			//rr++;
+			return true;
+			}
+		}	
+	return false;
+	}	
+	friend std::ostream& operator <<(std::ostream& out, Matrix<T>& right_object){
+		typename std::vector<std::vector<T>>::iterator rows;
+		typename std::vector<T>::iterator cols;
+			for(rows = right_object._data.begin(); rows != right_object._data.end(); rows++){
 				for(cols = rows->begin(); cols!= rows->end(); cols++){
 					out<<*cols<<' ';	
 				}
@@ -34,10 +59,11 @@ class Matrix {
 			}
 	return out;
 	}
-	friend std::istream& operator >>(std::istream& in, Matrix<T>& l_object){
+	
+	friend std::istream& operator >>(std::istream& in, Matrix<T>& right_object){
 		typename std::vector<std::vector<T>>::iterator rows;
 		typename std::vector<T>::iterator cols;
-			for(rows = l_object._data.begin(); rows != l_object._data.end(); rows++){
+			for(rows = right_object._data.begin(); rows != right_object._data.end(); rows++){
 				for(cols = rows->begin(); cols != rows->end(); cols++){
 					in>>(*cols);
 				}

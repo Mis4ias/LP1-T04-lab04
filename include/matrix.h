@@ -4,121 +4,49 @@
 #include <iostream>
 #include <vector>
 
+
 template <class T>
 class Matrix {
-	private:
-		int rows, cols;			
-		bool flag;
-		std::vector<std::vector<T>> matrix_at;
+	/**@brief a ideia é não utilizar nenhum tipo de atributo para conter o tamanho do array.
+	 * todas as operações serão feitas usando os iterators.
+	 * O tamanho da matrix é definida via construtor parametrizado.
+	 * **/	
+	private:	
+	std::vector<std::vector<T>> _data;	
+	
 	public:
-		Matrix(int rows_pub, int cols_pub, bool flag_pub) : rows(rows_pub), cols(cols_pub), flag(flag_pub){
-			if(flag_pub == true){
-				for(int i=0;i<cols_pub;i++){
-					std::vector<int> vect;
-					for(int j=0;j<rows_pub;j++){
-						vect.push_back(j);
-					}
-				matrix_at.push_back(vect);
+	Matrix(size_t end_rows, size_t end_cols, bool flag = true){
+		if(flag) _data.resize(end_rows);
+		else _data.reserve(end_rows);
+			for(size_t ik = 0; ik < end_rows;ik++){
+				if(flag) _data[ik].resize(end_cols);
+				else _data[ik].reserve(end_cols);
+			}
+	}
+	friend std::ostream& operator <<(std::ostream& out, Matrix<T>& l_object){
+		typename std::vector<std::vector<T>>::iterator rows;
+		typename std::vector<T>::iterator cols;
+			for(rows = l_object._data.begin(); rows != l_object._data.end(); rows++){
+				for(cols = rows->begin(); cols!= rows->end(); cols++){
+					out<<*cols<<' ';	
+				}
+			out<<std::endl;
+			}
+	return out;
+	}
+	friend std::istream& operator >>(std::istream& in, Matrix<T>& l_object){
+		typename std::vector<std::vector<T>>::iterator rows;
+		typename std::vector<T>::iterator cols;
+			for(rows = l_object._data.begin(); rows != l_object._data.end(); rows++){
+				for(cols = rows->begin(); cols != rows->end(); cols++){
+					in>>(*cols);
 				}
 			}
-		}
-		Matrix(){  }
-		
-		~Matrix(){	}				
-		
-		Matrix(const Matrix& to_copy){
-			matrix_at = to_copy.matrix_at;
-			rows = to_copy.rows;
-			cols = to_copy.cols;
-		}
-		
-		T getElement(int rows, int cols)const { return matrix_at[rows][cols]; }
-		int getRows()const { return rows; }		
-		int getCols()const { return cols; }
-		
-		
-		Matrix& operator = (const Matrix& operator_right);
-		
-		const Matrix operator + (const Matrix& operator_right);
-		const Matrix operator - (const Matrix& operator_right);
-		template <typename R> // Don't know about use the same T as parameter to the operator.
-		friend std::ostream& operator<< (std::ostream &ost, const Matrix<R> &matrix); //	
-		//template <typename R>
-		//friend std::istream& operator<< (std::istream &ist, Matrix<R> &matrix); //	
+	return in;
+	} 
+
+
 };
-
-
-
-
-
-
-
-
-
-/**
- * @brief Operators Overloads
- **/
-
-/** @brief Operador de = */
-template <typename T>
-Matrix<T>& Matrix<T>::operator = (const Matrix& operator_right){
-	this->matrix_at = operator_right.matrix_at;
-	this->rows = operator_right.rows;
-	this->cols = operator_right.cols;
-	return *this;
-}
-
-/** @brief Operador de + */
-template <typename T>
-const Matrix<T> Matrix<T>::operator + (const Matrix& operator_right){
-	Matrix<T> result = operator_right;
-	for(int i=0;i<this->cols;i++){
-		for(int j=0;j<this->rows;j++){
-			result.matrix_at[i][j] = this->matrix_at[i][j] + operator_right.matrix_at[i][j];
-		}
-	}
-return result;
-}
-
-/** @brief Operador de - */
-template <typename T>
-const Matrix<T> Matrix<T>::operator - (const Matrix& operator_right){
-	Matrix<T> result = operator_right;
-	for(int i=0;i<this->cols;i++){
-		for(int j=0;j<this->rows;j++){
-			result.matrix_at[i][j] = this->matrix_at[i][j] - operator_right.matrix_at[i][j];
-		}
-	}
-return result;
-}
-
-/** @brief Operador de saida de fluxo */
-template <typename T>
-std::ostream& operator<< (std::ostream &ost, const Matrix<T> &matrix){
-	for(int i=0;i<matrix.getCols();i++){	
-		for(int j=0;j<matrix.getRows();j++){
-			ost<<matrix.getElement(i,j)<<' ';
-		}
-	ost <<std::endl;
-	}
-return ost;
-}
-
-/** @brief Operadore de entrada de fluxo ainda em construcao */
-template <typename T>
-std::istream& operator>> (std::istream &ist, Matrix<T> &matrix){
-	for(int i=0;i<matrix.getCols();i++){
-		for(int j=0;j<matrix.getRows();j++){
-			//ist >> matrix.rows;
-		}
-	}
-return ist;
-}
-
-
-
-
-
 
 
 #endif // __MATRIX_H__

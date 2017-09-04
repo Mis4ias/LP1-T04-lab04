@@ -33,7 +33,7 @@ $(APPOBJ): $(APP)
 ${OBJDIR}/%.o: $(SRCDIR)/%.cpp $(INCLUDEDIR)/%.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-test: $(TESTS) 
+test: $(TESTS) $(INCOBJ) 
 	$(info ************  Testes concluídos com sucesso! ************)
 
 $(TESTDIR)/t_%: $(TESTDIR)/t_%.cpp $(OBJS) $(INCOBJ)

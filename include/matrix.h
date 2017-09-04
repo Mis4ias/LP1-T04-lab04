@@ -30,24 +30,17 @@ class Matrix {
 	}	
 	
 	bool operator== (const Matrix& right_object){
-		typename std::vector<std::vector<T>>::iterator rows;
-		typename std::vector<T>::iterator cols;
-		typename std::vector<std::vector<T>>::iterator rr;
-		typename std::vector<T>::iterator rc;
-		if(_data.size() == right_object._data.size()){
-			for(rows = _data.begin(); rows != _data.end(); rows++){
-				//rr = right_object._data.begin();
-				for(cols = rows->begin(); cols != rows->end(); cols ++){
-				//	rc = rr->begin();
-					if (*cols != *right_object._data.begin()+sizeof(cols)) return false; 
-				//	rc++;
-				}
-			//rr++;
-			return true;
-			}
-		}	
+		if(_data.size() == right_object._data.size() &&_data[0].size() == right_object._data[0].size()){
+			for(size_t it = 0; it < right_object._data.size(); it++){
+				for(size_t ik = 0; ik < right_object._data[it].size(); ik++){
+					if(_data[it][ik] != right_object._data[it][ik]) return false;
+				}		
+			}	
+		return true;
+		}
 	return false;
 	}	
+	
 	friend std::ostream& operator <<(std::ostream& out, Matrix<T>& right_object){
 		typename std::vector<std::vector<T>>::iterator rows;
 		typename std::vector<T>::iterator cols;

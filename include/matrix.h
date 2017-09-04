@@ -42,11 +42,9 @@ class Matrix {
 	}	
 	
 	friend std::ostream& operator <<(std::ostream& out, Matrix<T>& right_object){
-		typename std::vector<std::vector<T>>::iterator rows;
-		typename std::vector<T>::iterator cols;
-			for(rows = right_object._data.begin(); rows != right_object._data.end(); rows++){
-				for(cols = rows->begin(); cols!= rows->end(); cols++){
-					out<<*cols<<' ';	
+			for(size_t it = 0; it < right_object._data.size(); it++){
+				for(size_t ik = 0; ik < right_object._data[it].size(); ik++){
+					out<<right_object._data[it][ik]<<' ';	
 				}
 			out<<std::endl;
 			}
@@ -54,11 +52,9 @@ class Matrix {
 	}
 	
 	friend std::istream& operator >>(std::istream& in, Matrix<T>& right_object){
-		typename std::vector<std::vector<T>>::iterator rows;
-		typename std::vector<T>::iterator cols;
-			for(rows = right_object._data.begin(); rows != right_object._data.end(); rows++){
-				for(cols = rows->begin(); cols != rows->end(); cols++){
-					in>>(*cols);
+			for(size_t it = 0; it < right_object._data.size(); it++){
+				for(size_t ik = 0; ik < right_object._data[it].size(); ik++){
+					in>>right_object._data[it][ik];
 				}
 			}
 	return in;
